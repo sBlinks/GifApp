@@ -18,6 +18,8 @@ export class GifsService {
     return [...this.historial];
   }
   constructor(private http: HttpClient) {
+    const valor = localStorage.getItem('historial');
+    this.historial = JSON.parse(valor) || [];
   }
 
   BuscarGifs(valor: string): void{
@@ -27,6 +29,7 @@ export class GifsService {
     {
       this.historial.unshift(valor);
       this.historial = this.historial.splice(0, 10);
+      localStorage.setItem('historial', JSON.stringify(this.historial));
     }
     this.http.get<GifsInterface>(url)
       .subscribe(resp => {
