@@ -3,7 +3,8 @@
     Gifs App
   </h3>
   <hr class="text-light">
-  <div class="list-group">
-    <a class="list-group-item list-group-item-action" href="#">Dashboard</a>
+  <div class="list-group" >
+    <a *ngFor="let item of Historial" class="list-group-item list-group-item-action" href="#">{{item}}</a>
+
   </div>
 </div>
