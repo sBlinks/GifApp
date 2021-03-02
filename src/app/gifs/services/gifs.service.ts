@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {GifsInterface} from '../interface/gifs.interface';
+import {ResultadosComponent} from '../resultados/resultados.component';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class GifsService {
   private urlApiKey = 'api_key=';
   private urlQuery = '&q=';
   private urlEnd = '&limit=10&lang=es';
+  public resultados: GifsInterface[] = [];
 
   get Historial(): string[]{
     return [...this.historial];
@@ -28,8 +30,8 @@ export class GifsService {
       this.historial = this.historial.splice(0, 10);
     }
     this.http.get(url)
-      .subscribe((resp: GifsInterface) => {
-        console.log(resp.data);
+      .subscribe((resp: GifsInterface[]) => {
+        this.resultados = resp;
       });
   }
 
