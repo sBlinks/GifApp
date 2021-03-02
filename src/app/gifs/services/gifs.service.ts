@@ -11,7 +11,13 @@ export class GifsService {
   }
 
   BuscarGifs(valor: string): void{
-    this.historial.unshift(valor);
+    valor = valor.trim().toLocaleLowerCase();
+
+    if (!this.historial.includes(valor))
+    {
+      this.historial.unshift(valor);
+      this.historial = this.historial.splice(0, 10);
+    }
     console.log(this.historial);
   }
 
