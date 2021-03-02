@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {GifsService} from '../services/gifs.service';
-import {GifsInterface} from '../interface/gifs.interface';
+import {Gifs} from '../interface/gifs.interface';
 
 @Component({
   selector: 'app-resultados',
@@ -12,7 +12,7 @@ export class ResultadosComponent implements OnInit {
 
   constructor(private gifsService: GifsService) { }
 
-  get Resultados(): GifsInterface[]{
+  get Resultados(): Gifs[]{
     return this.gifsService.resultados;
   }
 

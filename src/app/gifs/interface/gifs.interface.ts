@@ -1,10 +1,10 @@
 export interface GifsInterface{
-  data: Datum[];
+  data: Gifs[];
   pagination: Pagination;
   meta: Meta;
 }
 
-export interface Datum {
+export interface Gifs {
   type: Type;
   id: string;
   url: string;
