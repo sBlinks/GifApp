@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Gifs, GifsInterface} from '../interface/gifs.interface';
 
 @Injectable({
@@ -8,10 +8,11 @@ import {Gifs, GifsInterface} from '../interface/gifs.interface';
 export class GifsService {
   private historial: string[] = [];
   private apiKey = 'RAfjRiIuzXB1B1aUcGytKXP5qrIoxmoP';
-  private url = 'http:///api.giphy.com/v1/gifs/search?';
-  private urlApiKey = 'api_key=';
-  private urlQuery = '&q=';
-  private urlEnd = '&limit=10&lang=es';
+  private url = 'http:///api.giphy.com/v1/gifs';
+  private urlApiKey = 'api_key';
+  private urlQuery = 'q';
+  private urlLimit = 'limit';
+  private urlLang = 'lang';
   public resultados: Gifs[] = [];
 
   get Historial(): string[]{
@@ -26,14 +27,19 @@ export class GifsService {
 
   BuscarGifs(valor: string): void{
     valor = valor.trim().toLocaleLowerCase();
-    const url = `${this.url}${this.urlApiKey}${this.apiKey}${this.urlQuery}${valor}${this.urlEnd}`;
+    const params = new HttpParams()
+      .set(this.urlApiKey, this.apiKey)
+      .set(this.urlQuery, valor)
+      .set(this.urlLimit, '10')
+      .set(this.urlLang, 'es');
+
     if (!this.historial.includes(valor))
     {
       this.historial.unshift(valor);
       this.historial = this.historial.splice(0, 10);
       localStorage.setItem('historial', JSON.stringify(this.historial));
     }
-    this.http.get<GifsInterface>(url)
+    this.http.get<GifsInterface>(`${this.url}/search`, {params})
       .subscribe(resp => {
         this.resultados = resp.data;
         localStorage.setItem('resultados', JSON.stringify(this.resultados));
